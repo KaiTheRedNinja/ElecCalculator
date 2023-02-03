@@ -24,9 +24,22 @@ struct CircuitCalculatorView: View {
 
     var body: some View {
         List {
-//            Section {
-//                // image goes here
-//            }
+            Section {
+                ZStack {
+                    Color.black.frame(height: 10)
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack {
+                            ForEach(resistences, id: \.self) { resistance in
+                                ResistorView(resistor: .init(resistance: Int(resistance),
+                                                             tolerance: 5))
+                                .scaleEffect(.init(0.2))
+                                .frame(width: 80)
+                            }
+                        }
+                    }
+                }
+                .padding(.horizontal, -20)
+            }
 
             Section {
                 Picker("Circuit Type", selection: $circuitType) {
@@ -71,6 +84,7 @@ struct CircuitCalculatorView: View {
                               value: $tempResist,
                               formatter: NumberFormatter())
                     .onSubmit {
+                        tempResist = 0
                         resistences.append(tempResist)
                     }
                     .multilineTextAlignment(.trailing)
