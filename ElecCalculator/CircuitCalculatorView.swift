@@ -48,14 +48,38 @@ struct CircuitCalculatorView: View {
                                 ResistorView(resistor: .init(resistance: Int(resistance),
                                                              tolerance: 5))
                                 .scaleEffect(.init(0.2))
-                                .frame(width: circuitType == .series ? 80 : 40)
+                                .frame(width: circuitType == .series ? 80 : 100)
                                 .rotationEffect(circuitType == .series ? .zero : .degrees(90))
+                            }
+                            .overlay {
+                                switch circuitType {
+                                case .series:
+                                    VStack {
+                                        Spacer()
+                                        Text("\(resistance.twoDP) Ω")
+                                        Spacer()
+                                        Text((voltage * resistance / totalResistence()).twoDP + " V")
+                                        Spacer()
+                                    }
+                                case .parallel:
+                                    HStack {
+                                        Text("\(Int(resistance.rounded()))\nΩ")
+                                            .multilineTextAlignment(.trailing)
+                                            .padding(.trailing, 15)
+                                        Spacer()
+                                            .frame(width: 40)
+                                        Text("\(Int((voltage * resistance / totalResistence()).rounded()))\nV")
+                                            .multilineTextAlignment(.leading)
+                                            .padding(.leading, -18)
+                                    }
+                                }
                             }
                         }
                         Spacer().frame(width: 30)
                     }
                     .background {
-                        if circuitType == .series {
+                        switch circuitType {
+                        case .series:
                             HStack {
                                 Image(systemName: "plus")
                                 Color.red.frame(height: 10)
@@ -70,19 +94,19 @@ struct CircuitCalculatorView: View {
                                     .frame(width: 40)
                                 Image(systemName: "minus")
                             }
-                        } else {
+                        case .parallel:
                             VStack {
                                 HStack {
                                     Image(systemName: "plus")
                                         .padding(.vertical, -5)
                                     Color.red.frame(height: 10)
-                                    Spacer().frame(width: 45)
+                                    Spacer().frame(width: 75)
                                 }
                                 Spacer()
                                 HStack {
                                     Image(systemName: "minus")
                                     Color.blue.frame(height: 10)
-                                    Spacer().frame(width: 45)
+                                    Spacer().frame(width: 75)
                                 }
                             }
                         }
