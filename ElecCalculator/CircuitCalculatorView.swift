@@ -25,20 +25,52 @@ struct CircuitCalculatorView: View {
     var body: some View {
         List {
             Section {
-                ZStack {
-                    Color.black.frame(height: 10)
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
-                            ForEach(resistences, id: \.self) { resistance in
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        Spacer().frame(width: 30)
+                        ForEach(resistences, id: \.self) { resistance in
+                            ZStack {
+                                if circuitType == .parallel {
+                                    VStack {
+                                        Color.red.frame(width: 10)
+                                        Color.blue.frame(width: 10)
+                                    }
+                                }
                                 ResistorView(resistor: .init(resistance: Int(resistance),
                                                              tolerance: 5))
                                 .scaleEffect(.init(0.2))
-                                .frame(width: 80)
+                                .frame(width: circuitType == .series ? 80 : 40)
+                                .rotationEffect(circuitType == .series ? .zero : .degrees(90))
+                            }
+                        }
+                        Spacer().frame(width: 30)
+                    }
+                    .background {
+                        if circuitType == .series {
+                            HStack {
+                                Image(systemName: "plus")
+                                Color.black.frame(height: 10)
+                                Image(systemName: "minus")
+                            }
+                        } else {
+                            VStack {
+                                HStack {
+                                    Image(systemName: "plus")
+                                        .padding(.vertical, -5)
+                                    Color.red.frame(height: 10)
+                                    Spacer().frame(width: 45)
+                                }
+                                Spacer()
+                                HStack {
+                                    Image(systemName: "minus")
+                                    Color.blue.frame(height: 10)
+                                    Spacer().frame(width: 45)
+                                }
                             }
                         }
                     }
                 }
-                .padding(.horizontal, -20)
+//                .padding(.horizontal, -20)
             }
 
             Section {
