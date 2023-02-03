@@ -32,9 +32,18 @@ struct CircuitCalculatorView: View {
                             ZStack {
                                 if circuitType == .parallel {
                                     VStack {
-                                        Color.red.frame(width: 10)
-                                        Color.blue.frame(width: 10)
+                                        Rectangle()
+                                            .fill(LinearGradient(stops: [.init(color: .red, location: 0),
+                                                                         .init(color: .blue, location: 1)],
+                                                                 startPoint: .top,
+                                                                 endPoint: .bottom))
+                                        Rectangle()
+                                            .fill(LinearGradient(stops: [.init(color: .blue, location: 0),
+                                                                         .init(color: .red, location: 1)],
+                                                                 startPoint: .bottom,
+                                                                 endPoint: .top))
                                     }
+                                    .frame(width: 10)
                                 }
                                 ResistorView(resistor: .init(resistance: Int(resistance),
                                                              tolerance: 5))
@@ -49,7 +58,16 @@ struct CircuitCalculatorView: View {
                         if circuitType == .series {
                             HStack {
                                 Image(systemName: "plus")
-                                Color.black.frame(height: 10)
+                                Color.red.frame(height: 10)
+                                    .frame(width: 40)
+                                Rectangle()
+                                    .fill(LinearGradient(stops: [.init(color: .red, location: 0),
+                                                                 .init(color: .blue, location: 1)],
+                                                         startPoint: .leading,
+                                                         endPoint: .trailing))
+                                    .frame(height: 10)
+                                Color.blue.frame(height: 10)
+                                    .frame(width: 40)
                                 Image(systemName: "minus")
                             }
                         } else {
