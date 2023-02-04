@@ -28,60 +28,66 @@ struct EditableResistorView: View {
             Color.white.opacity(0.3)
             HStack {
                 Spacer()
-                Resistor.valueToColor(value: firstValue)
-                    .gesture(upDownGesture(change: { amount in
-                        let newValue = resistor.firstValue + amount
-                        guard newValue >= 0 && newValue < 10 else { return }
-                        firstValue = newValue
-                    }, confirm: {
-                        let amount = resistor.firstValue - firstValue
-                        let subtraction = amount * 10 * Int(pow(CGFloat(10), CGFloat(resistor.multiplier)))
-                        withAnimation {
-                            resistor.resistance -= subtraction
-                        }
-                    }))
-                    .frame(width: 20)
-                Resistor.valueToColor(value: secondValue)
-                    .gesture(upDownGesture(change: { amount in
-                        let newValue = resistor.secondValue + amount
-                        guard newValue >= 0 && newValue < 10 else { return }
-                        secondValue = newValue
-                    }, confirm: {
-                        let amount = resistor.secondValue - secondValue
-                        let subtraction = amount * Int(pow(CGFloat(10), CGFloat(resistor.multiplier)))
-                        withAnimation {
-                            resistor.resistance -= subtraction
-                        }
-                    }))
-                    .frame(width: 20)
-                Resistor.multiplierToColor(multiplier: multiplier)
-                    .gesture(upDownGesture(change: { amount in
-                        let newValue = resistor.multiplier + amount
-                        guard newValue >= 0 && newValue < 8 else { return }
-                        multiplier = newValue
-                    }, confirm: {
-                        let amount = resistor.multiplier - multiplier
-                        var value = resistor.resistance
-                        for _ in 0..<abs(amount) {
-                            if amount > 0 {
-                                value /= 10
-                            } else {
-                                value *= 10
-                            }
-                        }
-                        withAnimation {
-                            resistor.resistance = value
-                        }
-                    }))
-                    .frame(width: 20)
+//                Resistor.valueToColor(value: firstValue)
+//                    .gesture(upDownGesture(change: { amount in
+//                        let newValue = resistor.firstValue + amount
+//                        guard newValue >= 0 && newValue < 10 else { return }
+//                        withAnimation {
+//                            firstValue = newValue
+//                        }
+//                    }, confirm: {
+//                        let amount = resistor.firstValue - firstValue
+//                        let subtraction = amount * 10 * Int(pow(CGFloat(10), CGFloat(resistor.multiplier)))
+//                        withAnimation {
+//                            resistor.resistance -= subtraction
+//                        }
+//                    }))
+//                    .frame(width: 20)
+//                Resistor.valueToColor(value: secondValue)
+//                    .gesture(upDownGesture(change: { amount in
+//                        let newValue = resistor.secondValue + amount
+//                        guard newValue >= 0 && newValue < 10 else { return }
+//                        withAnimation {
+//                            secondValue = newValue
+//                        }
+//                    }, confirm: {
+//                        let amount = resistor.secondValue - secondValue
+//                        let subtraction = amount * Int(pow(CGFloat(10), CGFloat(resistor.multiplier)))
+//                        withAnimation {
+//                            resistor.resistance -= subtraction
+//                        }
+//                    }))
+//                    .frame(width: 20)
+//                Resistor.multiplierToColor(multiplier: multiplier)
+//                    .gesture(upDownGesture(change: { amount in
+//                        let newValue = resistor.multiplier + amount
+//                        guard newValue >= 0 && newValue < 8 else { return }
+//                        withAnimation {
+//                            multiplier = newValue
+//                        }
+//                    }, confirm: {
+//                        let amount = resistor.multiplier - multiplier
+//                        var value = resistor.resistance
+//                        for _ in 0..<abs(amount) {
+//                            if amount > 0 {
+//                                value /= 10
+//                            } else {
+//                                value *= 10
+//                            }
+//                        }
+//                        withAnimation {
+//                            resistor.resistance = value
+//                        }
+//                    }))
+//                    .frame(width: 20)
                 Spacer()
-                Resistor.toleranceToColor(tolerance: tolerance)
-                    .gesture(upDownGesture(change: { amount in
-                        tolerance = resistor.tolerance + amount
-                    }, confirm: {
-//                        resistor.tolerance = tolerance
-                    }))
-                    .frame(width: 20)
+//                Resistor.toleranceToColor(tolerance: tolerance)
+//                    .gesture(upDownGesture(change: { amount in
+//                        tolerance = resistor.tolerance + amount
+//                    }, confirm: {
+////                        resistor.tolerance = tolerance
+//                    }))
+//                    .frame(width: 20)
                 Spacer()
             }
 

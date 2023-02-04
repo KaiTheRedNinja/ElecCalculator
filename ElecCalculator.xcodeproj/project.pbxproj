@@ -16,6 +16,7 @@
 		935B8C08298CF2AF00BC3402 /* ResistorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935B8C07298CF2AF00BC3402 /* ResistorView.swift */; };
 		935B8C0A298D46C400BC3402 /* EditableResistorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935B8C09298D46C400BC3402 /* EditableResistorView.swift */; };
 		93CDCA80298E847000539B81 /* Resistor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CDCA7F298E847000539B81 /* Resistor.swift */; };
+		93CDCA82298E85FC00539B81 /* ColorSnappingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CDCA81298E85FC00539B81 /* ColorSnappingScrollView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		935B8C07298CF2AF00BC3402 /* ResistorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResistorView.swift; sourceTree = "<group>"; };
 		935B8C09298D46C400BC3402 /* EditableResistorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableResistorView.swift; sourceTree = "<group>"; };
 		93CDCA7F298E847000539B81 /* Resistor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resistor.swift; sourceTree = "<group>"; };
+		93CDCA81298E85FC00539B81 /* ColorSnappingScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSnappingScrollView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 				935B8C07298CF2AF00BC3402 /* ResistorView.swift */,
 				93CDCA7F298E847000539B81 /* Resistor.swift */,
 				935B8C09298D46C400BC3402 /* EditableResistorView.swift */,
+				93CDCA81298E85FC00539B81 /* ColorSnappingScrollView.swift */,
 				932F2226298C8BE80039D70A /* Assets.xcassets */,
 				932F2228298C8BE80039D70A /* Preview Content */,
 			);
@@ -153,6 +156,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				932F2231298C8BF80039D70A /* CircuitCalculatorView.swift in Sources */,
+				93CDCA82298E85FC00539B81 /* ColorSnappingScrollView.swift in Sources */,
 				935B8C0A298D46C400BC3402 /* EditableResistorView.swift in Sources */,
 				932F2225298C8BE70039D70A /* ContentView.swift in Sources */,
 				935B8C06298CA75200BC3402 /* RelationCalculatorView.swift in Sources */,
