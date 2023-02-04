@@ -10,6 +10,7 @@ import SwiftUI
 struct ColorSnappingScrollView: View {
     @State var values: [Int]
     @State var height: CGFloat = 100
+    @State var currentOffset: Int
     @Binding var currentValue: Int
     @State var colorForValue: (Int) -> Color
 
@@ -21,6 +22,8 @@ struct ColorSnappingScrollView: View {
         self.height = height
         self._currentValue = currentValue
         self.colorForValue = colorForValue
+
+        self.currentOffset = values.firstIndex(of: currentValue.wrappedValue)!
     }
 
     @State var offset: CGFloat = 0
@@ -33,7 +36,7 @@ struct ColorSnappingScrollView: View {
                         colorForValue(value)
                             .frame(height: height)
                             .padding(.vertical, -4)
-                            .offset(y: height * ((CGFloat(values.count) / 2) - CGFloat(currentValue) - CGFloat(1)) + offset)
+                            .offset(y: height * ((CGFloat(values.count) / 2) - CGFloat(currentOffset) - CGFloat(1)) + offset)
                     }
                 }
                 .gesture(DragGesture()
@@ -45,10 +48,11 @@ struct ColorSnappingScrollView: View {
                     .onEnded { value in
                         // evaluate the nearest item
                         let offsetCount = Int((offset/height).rounded())
-                        let newValue = currentValue - offsetCount
+                        let newValue = currentOffset - offsetCount
                         withAnimation {
                             if newValue >= 0 && newValue < values.count {
-                                currentValue -= offsetCount
+                                currentOffset -= offsetCount
+                                currentValue = values[currentOffset]
                             }
                             offset = 0
                         }

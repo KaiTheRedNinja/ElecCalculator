@@ -12,14 +12,12 @@ struct EditableResistorView: View {
     @State var firstValue: Int
     @State var secondValue: Int
     @State var multiplier: Int
-    @State var tolerance: Int
 
     init(resistor: Binding<Resistor>) {
         self._resistor = resistor
         self.firstValue = resistor.wrappedValue.firstValue
         self.secondValue = resistor.wrappedValue.secondValue
         self.multiplier = resistor.wrappedValue.multiplier
-        self.tolerance = resistor.wrappedValue.tolerance
     }
 
     var body: some View {
@@ -53,21 +51,43 @@ struct EditableResistorView: View {
                                         height: 100-16,
                                         currentValue: $firstValue,
                                         colorForValue: Resistor.valueToColor(value:))
+                .onChange(of: firstValue) { _ in
+                    let difference = resistor.firstValue - firstValue
+                    let subtract = difference * 10 * Int(pow(CGFloat(10), CGFloat(resistor.multiplier)))
+                    resistor.resistance -= subtract
+                }
                 .frame(width: 20, height: 200)
                 ColorSnappingScrollView(values: Array(0..<10),
                                         height: 100-16,
                                         currentValue: $secondValue,
                                         colorForValue: Resistor.valueToColor(value:))
+                .onChange(of: secondValue) { _ in
+                    let difference = resistor.secondValue - secondValue
+                    let subtract = difference * Int(pow(CGFloat(10), CGFloat(resistor.multiplier)))
+                    resistor.resistance -= subtract
+                }
                 .frame(width: 20, height: 200)
-                ColorSnappingScrollView(values: Array(1...8),
+                ColorSnappingScrollView(values: Array(0..<8),
                                         height: 100-16,
                                         currentValue: $multiplier,
                                         colorForValue: Resistor.multiplierToColor(multiplier:))
+                .onChange(of: multiplier) { _ in
+                    let difference = resistor.multiplier - multiplier
+                    var newValue = resistor.resistance
+                    for _ in 0..<abs(difference) {
+                        if difference > 0 {
+                            newValue /= 10
+                        } else if difference < 0 {
+                            newValue *= 10
+                        }
+                    }
+                    resistor.resistance = newValue
+                }
                 .frame(width: 20, height: 200)
                 Spacer()
                 ColorSnappingScrollView(values: [1, 2, 5, 10],
                                         height: 100-16,
-                                        currentValue: $tolerance,
+                                        currentValue: $resistor.tolerance,
                                         colorForValue: Resistor.toleranceToColor(tolerance:))
                 .frame(width: 20, height: 200)
                 Spacer()
@@ -113,12 +133,14 @@ struct EditableResistorView_Previews: PreviewProvider {
     }
 
     struct EditableResistorViewWrapper: View {
-        @State var resistor: Resistor = .init(resistance: 690, tolerance: 1)
+        @State var resistor: Resistor = .init(resistance: 69, tolerance: 1)
         var body: some View {
             VStack {
                 EditableResistorView(resistor: $resistor)
+                    .frame(height: 300)
                 Text("Resistance: \(resistor.resistance)")
                 Text("Multiplier: \(resistor.multiplier)")
+                Text("Tolerance: \(resistor.tolerance)%")
             }
         }
     }
