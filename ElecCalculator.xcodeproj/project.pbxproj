@@ -17,6 +17,7 @@
 		935B8C0A298D46C400BC3402 /* EditableResistorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935B8C09298D46C400BC3402 /* EditableResistorView.swift */; };
 		93CDCA80298E847000539B81 /* Resistor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CDCA7F298E847000539B81 /* Resistor.swift */; };
 		93CDCA82298E85FC00539B81 /* ColorSnappingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CDCA81298E85FC00539B81 /* ColorSnappingScrollView.swift */; };
+		93CDCA84298E970800539B81 /* ResistorIdentificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CDCA83298E970800539B81 /* ResistorIdentificationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		935B8C09298D46C400BC3402 /* EditableResistorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableResistorView.swift; sourceTree = "<group>"; };
 		93CDCA7F298E847000539B81 /* Resistor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resistor.swift; sourceTree = "<group>"; };
 		93CDCA81298E85FC00539B81 /* ColorSnappingScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSnappingScrollView.swift; sourceTree = "<group>"; };
+		93CDCA83298E970800539B81 /* ResistorIdentificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResistorIdentificationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 				935B8C07298CF2AF00BC3402 /* ResistorView.swift */,
 				93CDCA7F298E847000539B81 /* Resistor.swift */,
 				935B8C09298D46C400BC3402 /* EditableResistorView.swift */,
+				93CDCA83298E970800539B81 /* ResistorIdentificationView.swift */,
 				93CDCA81298E85FC00539B81 /* ColorSnappingScrollView.swift */,
 				932F2226298C8BE80039D70A /* Assets.xcassets */,
 				932F2228298C8BE80039D70A /* Preview Content */,
@@ -155,6 +158,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93CDCA84298E970800539B81 /* ResistorIdentificationView.swift in Sources */,
 				932F2231298C8BF80039D70A /* CircuitCalculatorView.swift in Sources */,
 				93CDCA82298E85FC00539B81 /* ColorSnappingScrollView.swift in Sources */,
 				935B8C0A298D46C400BC3402 /* EditableResistorView.swift in Sources */,
