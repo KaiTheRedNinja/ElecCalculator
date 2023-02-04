@@ -24,92 +24,60 @@ struct EditableResistorView: View {
 
     var body: some View {
         ZStack {
-            Color.brown
-            Color.white.opacity(0.3)
+            // the resistor shape
+            ZStack {
+                Color.brown
+                Color.white.opacity(0.3)
+                    .overlay {
+                        VStack {
+                            HStack {
+                                Spacer().frame(width: 60)
+                                Color.white.frame(height: 8)
+                                Spacer().frame(width: 60)
+                            }
+                            Spacer()
+                            HStack {
+                                Spacer().frame(width: 60)
+                                Color.white.frame(height: 8)
+                                Spacer().frame(width: 60)
+                            }
+                        }
+                    }
+            }
+            .cornerRadius(30)
+            .padding(.vertical, 50)
+
             HStack {
                 Spacer()
-//                Resistor.valueToColor(value: firstValue)
-//                    .gesture(upDownGesture(change: { amount in
-//                        let newValue = resistor.firstValue + amount
-//                        guard newValue >= 0 && newValue < 10 else { return }
-//                        withAnimation {
-//                            firstValue = newValue
-//                        }
-//                    }, confirm: {
-//                        let amount = resistor.firstValue - firstValue
-//                        let subtraction = amount * 10 * Int(pow(CGFloat(10), CGFloat(resistor.multiplier)))
-//                        withAnimation {
-//                            resistor.resistance -= subtraction
-//                        }
-//                    }))
-//                    .frame(width: 20)
-//                Resistor.valueToColor(value: secondValue)
-//                    .gesture(upDownGesture(change: { amount in
-//                        let newValue = resistor.secondValue + amount
-//                        guard newValue >= 0 && newValue < 10 else { return }
-//                        withAnimation {
-//                            secondValue = newValue
-//                        }
-//                    }, confirm: {
-//                        let amount = resistor.secondValue - secondValue
-//                        let subtraction = amount * Int(pow(CGFloat(10), CGFloat(resistor.multiplier)))
-//                        withAnimation {
-//                            resistor.resistance -= subtraction
-//                        }
-//                    }))
-//                    .frame(width: 20)
-//                Resistor.multiplierToColor(multiplier: multiplier)
-//                    .gesture(upDownGesture(change: { amount in
-//                        let newValue = resistor.multiplier + amount
-//                        guard newValue >= 0 && newValue < 8 else { return }
-//                        withAnimation {
-//                            multiplier = newValue
-//                        }
-//                    }, confirm: {
-//                        let amount = resistor.multiplier - multiplier
-//                        var value = resistor.resistance
-//                        for _ in 0..<abs(amount) {
-//                            if amount > 0 {
-//                                value /= 10
-//                            } else {
-//                                value *= 10
-//                            }
-//                        }
-//                        withAnimation {
-//                            resistor.resistance = value
-//                        }
-//                    }))
-//                    .frame(width: 20)
+                ColorSnappingScrollView(values: Array(0..<10),
+                                        height: 100-16,
+                                        currentValue: $firstValue,
+                                        colorForValue: Resistor.valueToColor(value:))
+                .frame(width: 20, height: 200)
+                ColorSnappingScrollView(values: Array(0..<10),
+                                        height: 100-16,
+                                        currentValue: $secondValue,
+                                        colorForValue: Resistor.valueToColor(value:))
+                .frame(width: 20, height: 200)
+                ColorSnappingScrollView(values: Array(1...8),
+                                        height: 100-16,
+                                        currentValue: $multiplier,
+                                        colorForValue: Resistor.multiplierToColor(multiplier:))
+                .frame(width: 20, height: 200)
                 Spacer()
-//                Resistor.toleranceToColor(tolerance: tolerance)
-//                    .gesture(upDownGesture(change: { amount in
-//                        tolerance = resistor.tolerance + amount
-//                    }, confirm: {
-////                        resistor.tolerance = tolerance
-//                    }))
-//                    .frame(width: 20)
+                ColorSnappingScrollView(values: [1, 2, 5, 10],
+                                        height: 100-16,
+                                        currentValue: $tolerance,
+                                        colorForValue: Resistor.toleranceToColor(tolerance:))
+                .frame(width: 20, height: 200)
                 Spacer()
             }
+            .offset(y: 20)
 
             Text("Res: \(resistor.resistance)")
         }
-        .overlay {
-            VStack {
-                HStack {
-                    Spacer().frame(width: 60)
-                    Color.white.frame(height: 8)
-                    Spacer().frame(width: 60)
-                }
-                Spacer()
-                HStack {
-                    Spacer().frame(width: 60)
-                    Color.white.frame(height: 8)
-                    Spacer().frame(width: 60)
-                }
-            }
-        }
-        .cornerRadius(30)
-        .frame(width: 300, height: 100)
+        .padding(.vertical, -100)
+        .frame(width: 300, height: 0)
     }
 
     func upDownGesture(change: @escaping (Int) -> Void,

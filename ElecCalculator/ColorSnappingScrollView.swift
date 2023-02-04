@@ -47,7 +47,7 @@ struct ColorSnappingScrollView: View {
                         let offsetCount = Int((offset/height).rounded())
                         let newValue = currentValue - offsetCount
                         withAnimation {
-                            if newValue >= 0 && newValue < values.count-1 {
+                            if newValue >= 0 && newValue < values.count {
                                 currentValue -= offsetCount
                             }
                             offset = 0
@@ -66,8 +66,6 @@ struct ColorSnappingScrollView: View {
                         .padding(.vertical, -4)
                     Rectangle()
                         .fill(.clear)
-                        .border(.green, width: 3)
-                        .padding(-3)
                         .frame(height: height)
                         .padding(.vertical, -4)
                     Rectangle()
@@ -79,6 +77,11 @@ struct ColorSnappingScrollView: View {
                         .padding(.vertical, -4)
                 }
                 .offset(y: -height / 2)
+            }
+            .mask {
+                Rectangle()
+                    .frame(height: height*3)
+                    .offset(y: -height/2)
             }
         }
     }
@@ -93,12 +96,18 @@ struct ColorSnappingScrollView_Previews: PreviewProvider {
         @State var curValue = 2
 
         var body: some View {
-            HStack {
-                Text("Cur: \(curValue)")
-                ColorSnappingScrollView(values: Array(0..<10), currentValue: $curValue) { val in
-                    Resistor.valueToColor(value: val)
+            ZStack {
+                HStack {
+                    Text("Cur: \(curValue)")
+                    ColorSnappingScrollView(values: Array(0..<10), currentValue: $curValue) { val in
+                        Resistor.valueToColor(value: val)
+                    }
+                    .frame(width: 20, height: 200)
                 }
-                .frame(width: 20, height: 200)
+            }
+            .frame(height: 100)
+            .background {
+                Color.blue
             }
         }
     }
