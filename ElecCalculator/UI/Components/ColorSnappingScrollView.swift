@@ -88,6 +88,9 @@ struct ColorSnappingScrollView: View {
                     .offset(y: -height/2)
             }
         }
+        .onChange(of: currentValue) { _ in
+            self.currentOffset = values.firstIndex(of: currentValue)!
+        }
     }
 }
 

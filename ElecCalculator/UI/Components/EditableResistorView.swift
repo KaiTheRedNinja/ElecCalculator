@@ -47,14 +47,27 @@ struct EditableResistorView: View {
 
             HStack {
                 Spacer()
-                ColorSnappingScrollView(values: Array(0..<10),
-                                        height: 100-16,
-                                        currentValue: $firstValue,
-                                        colorForValue: Resistor.valueToColor(value:))
-                .onChange(of: firstValue) { _ in
-                    let difference = resistor.firstValue - firstValue
-                    let subtract = difference * 10 * Int(pow(CGFloat(10), CGFloat(resistor.multiplier)))
-                    resistor.resistance -= subtract
+                Menu {
+                    ForEach(0..<10) { index in
+                        Button {
+                            firstValue = index
+                        } label: {
+                            Text("\(index): \(Resistor.valueToColor(value: index).description)")
+                            if index == firstValue {
+                                Image(systemName: "checkmark")
+                            }
+                        }
+                    }
+                } label: {
+                    ColorSnappingScrollView(values: Array(0..<10),
+                                            height: 100-16,
+                                            currentValue: $firstValue,
+                                            colorForValue: Resistor.valueToColor(value:))
+                    .onChange(of: firstValue) { _ in
+                        let difference = resistor.firstValue - firstValue
+                        let subtract = difference * 10 * Int(pow(CGFloat(10), CGFloat(resistor.multiplier)))
+                        resistor.resistance -= subtract
+                    }
                 }
                 .frame(width: 20, height: 200)
                 ColorSnappingScrollView(values: Array(0..<10),
