@@ -19,9 +19,8 @@ struct RelationCalculatorView: View {
 
     var body: some View {
         List {
-            Section("Formula") {
+            Section {
                 HStack {
-                    Spacer()
                     Spacer()
                     EquationTriangleView(equation: formula.equation, selected: $unitTarget)
                     Spacer()
@@ -32,9 +31,20 @@ struct RelationCalculatorView: View {
                         }
                     }
                     .pickerStyle(.wheel)
+                    .frame(width: 150)
                     .padding(.vertical, -40)
                 }
                 .offset(y: -15)
+            } header: {
+                HStack {
+                    Text("Formula")
+                    Spacer()
+                    Button {
+                        // TODO: show list of formulas
+                    } label: {
+                        Image(systemName: "info.circle")
+                    }
+                }
             }
 
             Section("Inputs") {
