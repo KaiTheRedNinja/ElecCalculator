@@ -22,16 +22,18 @@ struct EquationTriangleView: View {
 
     var body: some View {
         VStack {
-            viewForUnit(unit: equation.value, target: .value)
+            viewForUnit(unit: equation.operation == .times ? equation.value : equation.var1,
+                        target: equation.operation == .times ? .value : .var1)
                 .background {
-                    if selected == .value {
+                    if selected == (equation.operation == .times ? .value : .var1) {
                         selectionColor
                     }
                 }
             HStack {
-                viewForUnit(unit: equation.var1, target: .var1)
+                viewForUnit(unit: equation.operation == .times ? equation.var1 : equation.value,
+                            target: equation.operation == .times ? .var1 : .value)
                     .background {
-                        if selected == .var1 {
+                        if selected == (equation.operation == .times ? .var1 : .value) {
                             selectionColor
                         }
                     }
@@ -93,7 +95,10 @@ struct EquationTriangleView_Previews: PreviewProvider {
     }
 
     struct EquationTriangleViewWrapper: View {
-        @State var equation: Equation = RelationFormula.wqv.equation
+        @State var equation: Equation = .init(value: .p,
+                                              var1: .q,
+                                              var2: .t,
+                                              operation: .div) // THIS EQUATION DOES NOT EXIST
         @State var selected: UnitTarget = .value
 
         var body: some View {
