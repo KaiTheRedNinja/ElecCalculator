@@ -12,17 +12,17 @@ struct ContentView: View {
         TabView {
             ResistorIdentificationView()
                 .tabItem {
-                    Label("Resistors Identifier", systemImage: "circle.fill")
+                    Label("Resistors Identifier", systemImage: "dumbbell.fill")
                 }
 
             CircuitCalculatorView()
                 .tabItem {
-                    Label("Circuit Calculator", systemImage: "circle.fill")
+                    Label("Circuit Calculator", systemImage: "arrow.triangle.branch")
                 }
 
             RelationCalculatorView()
                 .tabItem {
-                    Label("Formulas", systemImage: "circle.fill")
+                    Label("Formulas", systemImage: "x.squareroot")
                 }
         }
     }
