@@ -17,11 +17,6 @@ struct CircuitCalculatorView: View {
 
     @State var circuitType: CircuitType = .series
 
-    enum CircuitType: String, CaseIterable {
-        case parallel = "Parallel"
-        case series = "Series"
-    }
-
     var body: some View {
         List {
             Section {
@@ -29,51 +24,10 @@ struct CircuitCalculatorView: View {
                     HStack {
                         Spacer().frame(width: 30)
                         ForEach(resistences, id: \.self) { resistance in
-                            ZStack {
-                                if circuitType == .parallel {
-                                    VStack {
-                                        Rectangle()
-                                            .fill(LinearGradient(stops: [.init(color: .red, location: 0),
-                                                                         .init(color: .blue, location: 1)],
-                                                                 startPoint: .top,
-                                                                 endPoint: .bottom))
-                                        Rectangle()
-                                            .fill(LinearGradient(stops: [.init(color: .blue, location: 0),
-                                                                         .init(color: .red, location: 1)],
-                                                                 startPoint: .bottom,
-                                                                 endPoint: .top))
-                                    }
-                                    .frame(width: 10)
-                                }
-                                ResistorView(resistor: .init(resistance: Int(resistance),
-                                                             tolerance: 5))
-                                .scaleEffect(.init(0.2))
-                                .frame(width: circuitType == .series ? 80 : 100)
-                                .rotationEffect(circuitType == .series ? .zero : .degrees(90))
-                            }
-                            .overlay {
-                                switch circuitType {
-                                case .series:
-                                    VStack {
-                                        Spacer()
-                                        Text("\(resistance.twoDP) Ω")
-                                        Spacer()
-                                        Text((voltage * resistance / totalResistence()).twoDP + " V")
-                                        Spacer()
-                                    }
-                                case .parallel:
-                                    HStack {
-                                        Text("\(Int(resistance.rounded()))\nΩ")
-                                            .multilineTextAlignment(.trailing)
-                                            .padding(.trailing, 15)
-                                        Spacer()
-                                            .frame(width: 40)
-                                        Text("\(Int((voltage * resistance / totalResistence()).rounded()))\nV")
-                                            .multilineTextAlignment(.leading)
-                                            .padding(.leading, -18)
-                                    }
-                                }
-                            }
+                            LabelledResistorView(circuitType: circuitType,
+                                                 voltage: voltage,
+                                                 totalResistence: totalResistence(),
+                                                 resistance: resistance)
                         }
                         Spacer().frame(width: 30)
                     }
@@ -158,8 +112,8 @@ struct CircuitCalculatorView: View {
                               value: $tempResist,
                               formatter: NumberFormatter())
                     .onSubmit {
-                        tempResist = 0
                         resistences.append(tempResist)
+                        tempResist = 0
                     }
                     .multilineTextAlignment(.trailing)
                     Text("Ω")
@@ -207,6 +161,11 @@ struct CircuitCalculatorView: View {
         let resistence = totalResistence()
         return resistence != 0 ? (voltage / resistence) : 0
     }
+}
+
+enum CircuitType: String, CaseIterable {
+    case parallel = "Parallel"
+    case series = "Series"
 }
 
 struct CircuitCalculatorView_Previews: PreviewProvider {
