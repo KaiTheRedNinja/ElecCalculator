@@ -93,8 +93,6 @@ struct EditableResistorView: View {
                 Spacer()
             }
             .offset(y: 20)
-
-            Text("Res: \(resistor.resistance)")
         }
         .padding(.vertical, -100)
         .frame(width: 300, height: 0)

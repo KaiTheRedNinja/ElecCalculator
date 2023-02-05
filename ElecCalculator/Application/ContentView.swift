@@ -10,14 +10,19 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         TabView {
+            ResistorIdentificationView()
+                .tabItem {
+                    Label("Resistors Identifier", systemImage: "circle.fill")
+                }
+
             CircuitCalculatorView()
                 .tabItem {
-                    Label("HI", systemImage: "circle.fill")
+                    Label("Circuit Calculator", systemImage: "circle.fill")
                 }
 
             RelationCalculatorView()
                 .tabItem {
-                    Label("HI2", systemImage: "circle.fill")
+                    Label("Formulas", systemImage: "circle.fill")
                 }
         }
     }
