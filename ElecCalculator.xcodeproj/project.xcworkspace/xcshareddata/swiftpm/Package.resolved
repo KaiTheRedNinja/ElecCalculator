@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "updatedswiftui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/KaiTheRedNinja/UpdatedSwiftUI",
+      "state" : {
+        "branch" : "main",
+        "revision" : "bc50d033e3916b8a245cf7c8e3e3d64cd0f41b28"
+      }
+    }
+  ],
+  "version" : 2
+}

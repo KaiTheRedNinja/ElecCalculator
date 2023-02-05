@@ -47,7 +47,11 @@ struct EditableResistorView: View {
 
             HStack {
                 Spacer()
-                Menu {
+                ColorSnappingScrollView(values: Array(0..<10),
+                                        height: 100-16,
+                                        currentValue: $firstValue,
+                                        colorForValue: Resistor.valueToColor(value:))
+                .contextMenu {
                     ForEach(0..<10) { index in
                         Button {
                             firstValue = index
@@ -58,44 +62,20 @@ struct EditableResistorView: View {
                             }
                         }
                     }
-                } label: {
-                    ColorSnappingScrollView(values: Array(0..<10),
-                                            height: 100-16,
-                                            currentValue: $firstValue,
-                                            colorForValue: Resistor.valueToColor(value:))
-                    .onChange(of: firstValue) { _ in
-                        let difference = resistor.firstValue - firstValue
-                        let subtract = difference * 10 * Int(pow(CGFloat(10), CGFloat(resistor.multiplier)))
-                        resistor.resistance -= subtract
-                    }
+                } preview: {
+                    Resistor.valueToColor(value: firstValue)
+                        .frame(width: 20, height: 100-16)
                 }
                 .frame(width: 20, height: 200)
                 ColorSnappingScrollView(values: Array(0..<10),
                                         height: 100-16,
                                         currentValue: $secondValue,
                                         colorForValue: Resistor.valueToColor(value:))
-                .onChange(of: secondValue) { _ in
-                    let difference = resistor.secondValue - secondValue
-                    let subtract = difference * Int(pow(CGFloat(10), CGFloat(resistor.multiplier)))
-                    resistor.resistance -= subtract
-                }
                 .frame(width: 20, height: 200)
                 ColorSnappingScrollView(values: Array(0..<8),
                                         height: 100-16,
                                         currentValue: $multiplier,
                                         colorForValue: Resistor.multiplierToColor(multiplier:))
-                .onChange(of: multiplier) { _ in
-                    let difference = resistor.multiplier - multiplier
-                    var newValue = resistor.resistance
-                    for _ in 0..<abs(difference) {
-                        if difference > 0 {
-                            newValue /= 10
-                        } else if difference < 0 {
-                            newValue *= 10
-                        }
-                    }
-                    resistor.resistance = newValue
-                }
                 .frame(width: 20, height: 200)
                 Spacer()
                 ColorSnappingScrollView(values: [1, 2, 5, 10],
@@ -109,6 +89,28 @@ struct EditableResistorView: View {
         }
         .padding(.vertical, -100)
         .frame(width: 300, height: 0)
+        .onChange(of: firstValue) { _ in
+            let difference = resistor.firstValue - firstValue
+            let subtract = difference * 10 * Int(pow(CGFloat(10), CGFloat(resistor.multiplier)))
+            resistor.resistance -= subtract
+        }
+        .onChange(of: secondValue) { _ in
+            let difference = resistor.secondValue - secondValue
+            let subtract = difference * Int(pow(CGFloat(10), CGFloat(resistor.multiplier)))
+            resistor.resistance -= subtract
+        }
+        .onChange(of: multiplier) { _ in
+            let difference = resistor.multiplier - multiplier
+            var newValue = resistor.resistance
+            for _ in 0..<abs(difference) {
+                if difference > 0 {
+                    newValue /= 10
+                } else if difference < 0 {
+                    newValue *= 10
+                }
+            }
+            resistor.resistance = newValue
+        }
     }
 
     func upDownGesture(change: @escaping (Int) -> Void,
