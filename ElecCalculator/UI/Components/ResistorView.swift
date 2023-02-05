@@ -13,8 +13,12 @@ struct ResistorView: View {
 
     var body: some View {
         ZStack {
-            Color.brown
-            Color.white.opacity(0.3)
+            ZStack {
+                ResistorShape()
+                    .fill(Color.brown)
+                ResistorShape()
+                    .fill(Color.white.opacity(0.3))
+            }
             HStack {
                 Spacer()
                 Resistor.valueToColor(value: resistor.firstValue)
