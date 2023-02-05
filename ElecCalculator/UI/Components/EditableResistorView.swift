@@ -47,49 +47,23 @@ struct EditableResistorView: View {
 
             HStack {
                 Spacer()
-                selectorForResistance(value: $firstValue)
-                selectorForResistance(value: $secondValue)
-                ColorSnappingScrollView(values: Array(0..<8),
-                                        height: 100-16,
-                                        currentValue: $multiplier,
-                                        colorForValue: Resistor.multiplierToColor(multiplier:))
-                .frame(width: 20, height: 200)
-                .contextMenu {
-                    ForEach(0..<8) { index in
-                        Button {
-                            multiplier = index
-                        } label: {
-                            Text("x\(10**index): \(Resistor.multiplierToColor(multiplier: index).description)")
-                            if index == multiplier {
-                                Image(systemName: "checkmark")
-                            }
-                        }
-                    }
-                } preview: {
-                    Resistor.valueToColor(value: multiplier)
-                        .frame(width: 20, height: 100-16)
-                }
+                selectorFor(value: $firstValue,
+                            values: Array(0..<10),
+                            label: { "\($0)" },
+                            color: Resistor.valueToColor(value:))
+                selectorFor(value: $secondValue,
+                            values: Array(0..<10),
+                            label: { "\($0)" },
+                            color: Resistor.valueToColor(value:))
+                selectorFor(value: $multiplier,
+                            values: Array(0..<8),
+                            label: { "x\(10**$0)" },
+                            color: Resistor.multiplierToColor(multiplier:))
                 Spacer()
-                ColorSnappingScrollView(values: [1, 2, 5, 10],
-                                        height: 100-16,
-                                        currentValue: $resistor.tolerance,
-                                        colorForValue: Resistor.toleranceToColor(tolerance:))
-                .frame(width: 20, height: 200)
-                .contextMenu {
-                    ForEach([1, 2, 5, 10], id: \.self) { value in
-                        Button {
-                            resistor.tolerance = value
-                        } label: {
-                            Text("\(value)%: \(Resistor.toleranceToColor(tolerance: value).description)")
-                            if value == resistor.tolerance {
-                                Image(systemName: "checkmark")
-                            }
-                        }
-                    }
-                } preview: {
-                    Resistor.toleranceToColor(tolerance: resistor.tolerance)
-                        .frame(width: 20, height: 100-16)
-                }
+                selectorFor(value: $resistor.tolerance,
+                            values: [1, 2, 5, 10],
+                            label: { "\($0)%" },
+                            color: Resistor.toleranceToColor(tolerance:))
                 Spacer()
             }
             .offset(y: 20)
@@ -120,18 +94,21 @@ struct EditableResistorView: View {
         }
     }
 
-    func selectorForResistance(value: Binding<Int>) -> some View {
-        ColorSnappingScrollView(values: Array(0..<10),
+    func selectorFor(value: Binding<Int>,
+                     values: Array<Int>,
+                     label: @escaping (Int) -> String,
+                     color: @escaping (Int) -> Color) -> some View {
+        ColorSnappingScrollView(values: values,
                                 height: 100-16,
                                 currentValue: value,
-                                colorForValue: Resistor.valueToColor(value:))
+                                colorForValue: color)
         .contextMenu {
-            ForEach(0..<10) { index in
+            ForEach(values, id: \.self) { val in
                 Button {
-                    value.wrappedValue = index
+                    value.wrappedValue = val
                 } label: {
-                    Text("\(index): \(Resistor.valueToColor(value: index).description)")
-                    if index == value.wrappedValue {
+                    Text("\(label(val)): \(color(val).description)")
+                    if val == value.wrappedValue {
                         Image(systemName: "checkmark")
                     }
                 }
