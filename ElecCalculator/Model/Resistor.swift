@@ -24,7 +24,8 @@ struct Resistor: Identifiable, Hashable {
     }
 
     var valueWithoutMultiplier: Int {
-        return resistance / Int(pow(CGFloat(10), CGFloat(multiplier)))
+        let scale: Int = 10 ** multiplier
+        return resistance / scale
     }
 
     var firstValue: Int {

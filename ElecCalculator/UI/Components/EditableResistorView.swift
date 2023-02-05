@@ -47,42 +47,49 @@ struct EditableResistorView: View {
 
             HStack {
                 Spacer()
-                ColorSnappingScrollView(values: Array(0..<10),
-                                        height: 100-16,
-                                        currentValue: $firstValue,
-                                        colorForValue: Resistor.valueToColor(value:))
-                .contextMenu {
-                    ForEach(0..<10) { index in
-                        Button {
-                            firstValue = index
-                        } label: {
-                            Text("\(index): \(Resistor.valueToColor(value: index).description)")
-                            if index == firstValue {
-                                Image(systemName: "checkmark")
-                            }
-                        }
-                    }
-                } preview: {
-                    Resistor.valueToColor(value: firstValue)
-                        .frame(width: 20, height: 100-16)
-                }
-                .frame(width: 20, height: 200)
-                ColorSnappingScrollView(values: Array(0..<10),
-                                        height: 100-16,
-                                        currentValue: $secondValue,
-                                        colorForValue: Resistor.valueToColor(value:))
-                .frame(width: 20, height: 200)
+                selectorForResistance(value: $firstValue)
+                selectorForResistance(value: $secondValue)
                 ColorSnappingScrollView(values: Array(0..<8),
                                         height: 100-16,
                                         currentValue: $multiplier,
                                         colorForValue: Resistor.multiplierToColor(multiplier:))
                 .frame(width: 20, height: 200)
+                .contextMenu {
+                    ForEach(0..<8) { index in
+                        Button {
+                            multiplier = index
+                        } label: {
+                            Text("x\(10**index): \(Resistor.multiplierToColor(multiplier: index).description)")
+                            if index == multiplier {
+                                Image(systemName: "checkmark")
+                            }
+                        }
+                    }
+                } preview: {
+                    Resistor.valueToColor(value: multiplier)
+                        .frame(width: 20, height: 100-16)
+                }
                 Spacer()
                 ColorSnappingScrollView(values: [1, 2, 5, 10],
                                         height: 100-16,
                                         currentValue: $resistor.tolerance,
                                         colorForValue: Resistor.toleranceToColor(tolerance:))
                 .frame(width: 20, height: 200)
+                .contextMenu {
+                    ForEach([1, 2, 5, 10], id: \.self) { value in
+                        Button {
+                            resistor.tolerance = value
+                        } label: {
+                            Text("\(value)%: \(Resistor.toleranceToColor(tolerance: value).description)")
+                            if value == resistor.tolerance {
+                                Image(systemName: "checkmark")
+                            }
+                        }
+                    }
+                } preview: {
+                    Resistor.toleranceToColor(tolerance: resistor.tolerance)
+                        .frame(width: 20, height: 100-16)
+                }
                 Spacer()
             }
             .offset(y: 20)
@@ -91,12 +98,12 @@ struct EditableResistorView: View {
         .frame(width: 300, height: 0)
         .onChange(of: firstValue) { _ in
             let difference = resistor.firstValue - firstValue
-            let subtract = difference * 10 * Int(pow(CGFloat(10), CGFloat(resistor.multiplier)))
+            let subtract = difference * (10**(resistor.multiplier+1))
             resistor.resistance -= subtract
         }
         .onChange(of: secondValue) { _ in
             let difference = resistor.secondValue - secondValue
-            let subtract = difference * Int(pow(CGFloat(10), CGFloat(resistor.multiplier)))
+            let subtract = difference * (10**(resistor.multiplier))
             resistor.resistance -= subtract
         }
         .onChange(of: multiplier) { _ in
@@ -111,6 +118,29 @@ struct EditableResistorView: View {
             }
             resistor.resistance = newValue
         }
+    }
+
+    func selectorForResistance(value: Binding<Int>) -> some View {
+        ColorSnappingScrollView(values: Array(0..<10),
+                                height: 100-16,
+                                currentValue: value,
+                                colorForValue: Resistor.valueToColor(value:))
+        .contextMenu {
+            ForEach(0..<10) { index in
+                Button {
+                    value.wrappedValue = index
+                } label: {
+                    Text("\(index): \(Resistor.valueToColor(value: index).description)")
+                    if index == value.wrappedValue {
+                        Image(systemName: "checkmark")
+                    }
+                }
+            }
+        } preview: {
+            Resistor.valueToColor(value: value.wrappedValue)
+                .frame(width: 20, height: 100-16)
+        }
+        .frame(width: 20, height: 200)
     }
 
     func upDownGesture(change: @escaping (Int) -> Void,
@@ -138,6 +168,11 @@ extension CGSize {
     var diagonalLength: CGFloat {
         return sqrt(pow(self.width, 2) + pow(self.height, 2))
     }
+}
+
+infix operator **
+func ** (lhs: Int, rhs: Int) -> Int {
+    Int(pow(CGFloat(lhs), CGFloat(rhs)))
 }
 
 struct EditableResistorView_Previews: PreviewProvider {
