@@ -22,26 +22,13 @@ struct EditableResistorView: View {
 
     var body: some View {
         ZStack {
-            // the resistor shape
             ZStack {
-                Color.brown
-                Color.white.opacity(0.3)
-                    .overlay {
-                        VStack {
-                            HStack {
-                                Spacer().frame(width: 60)
-                                Color.white.frame(height: 8)
-                                Spacer().frame(width: 60)
-                            }
-                            Spacer()
-                            HStack {
-                                Spacer().frame(width: 60)
-                                Color.white.frame(height: 8)
-                                Spacer().frame(width: 60)
-                            }
-                        }
-                    }
+                ResistorShape()
+                    .fill(Color.brown)
+                ResistorShape()
+                    .fill(Color.white.opacity(0.3))
             }
+                .frame(height: 100)
             .cornerRadius(30)
             .padding(.vertical, 50)
 
@@ -66,7 +53,6 @@ struct EditableResistorView: View {
                             color: Resistor.toleranceToColor(tolerance:))
                 Spacer()
             }
-            .offset(y: 20)
         }
         .padding(.vertical, -100)
         .frame(width: 300, height: 0)
@@ -118,6 +104,20 @@ struct EditableResistorView: View {
                 .frame(width: 20, height: 100-16)
         }
         .frame(width: 20, height: 200)
+        .mask {
+            VStack {
+                LinearGradient(colors: [.clear, .white],
+                               startPoint: .top,
+                               endPoint: .bottom)
+                .padding(.vertical, -4)
+                Color.white
+                    .padding(.vertical, -4)
+                LinearGradient(colors: [.white, .clear],
+                               startPoint: .top,
+                               endPoint: .bottom)
+                .padding(.vertical, -4)
+            }
+        }
     }
 
     func upDownGesture(change: @escaping (Int) -> Void,
@@ -160,12 +160,17 @@ struct EditableResistorView_Previews: PreviewProvider {
     struct EditableResistorViewWrapper: View {
         @State var resistor: Resistor = .init(resistance: 69, tolerance: 1)
         var body: some View {
-            VStack {
-                EditableResistorView(resistor: $resistor)
-                    .frame(height: 300)
+            List {
                 Text("Resistance: \(resistor.resistance)")
                 Text("Multiplier: \(resistor.multiplier)")
                 Text("Tolerance: \(resistor.tolerance)%")
+            }
+            .safeAreaInset(edge: .top) {
+                EditableResistorView(resistor: $resistor)
+                    .frame(height: 200)
+                    .offset(y: 20)
+                    .background {
+                    }
             }
         }
     }

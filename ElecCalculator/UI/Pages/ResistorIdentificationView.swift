@@ -16,12 +16,6 @@ struct ResistorIdentificationView: View {
     var body: some View {
         List {
             Section {
-                EditableResistorView(resistor: $resistor)
-                    .frame(height: 110)
-                    .id(updator)
-            }
-
-            Section {
                 HStack {
                     Text("Resistance:")
                     Spacer()
@@ -61,6 +55,12 @@ struct ResistorIdentificationView: View {
                     }
                 }
             }
+        }
+        .safeAreaInset(edge: .top) {
+            EditableResistorView(resistor: $resistor)
+                .frame(height: 200)
+                .offset(y: 20)
+                .id(updator)
         }
     }
 }

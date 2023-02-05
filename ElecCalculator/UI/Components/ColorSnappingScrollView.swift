@@ -36,7 +36,7 @@ struct ColorSnappingScrollView: View {
                         colorForValue(value)
                             .frame(height: height)
                             .padding(.vertical, -4)
-                            .offset(y: height * ((CGFloat(values.count) / 2) - CGFloat(currentOffset) - CGFloat(1)) + offset)
+                            .offset(y: height * ((CGFloat(values.count) / 2) - CGFloat(currentOffset)) + offset)
                     }
                 }
                 .gesture(DragGesture()
@@ -59,33 +59,11 @@ struct ColorSnappingScrollView: View {
                     }
                 )
                 .frame(height: geom.size.height)
-
-                VStack {
-                    Rectangle()
-                        .fill(LinearGradient(stops: [.init(color: .white, location: 0),
-                                                     .init(color: .clear, location: 1)],
-                                             startPoint: .top,
-                                             endPoint: .bottom))
-                        .frame(height: height)
-                        .padding(.vertical, -4)
-                    Rectangle()
-                        .fill(.clear)
-                        .frame(height: height)
-                        .padding(.vertical, -4)
-                    Rectangle()
-                        .fill(LinearGradient(stops: [.init(color: .clear, location: 0),
-                                                     .init(color: .white, location: 1)],
-                                             startPoint: .top,
-                                             endPoint: .bottom))
-                        .frame(height: height)
-                        .padding(.vertical, -4)
-                }
                 .offset(y: -height / 2)
             }
             .mask {
                 Rectangle()
                     .frame(height: height*3)
-                    .offset(y: -height/2)
             }
         }
         .onChange(of: currentValue) { _ in
@@ -100,7 +78,7 @@ struct ColorSnappingScrollView_Previews: PreviewProvider {
     }
 
     struct ColorSnappingScrollViewWrapper: View {
-        @State var curValue = 2
+        @State var curValue = 0
 
         var body: some View {
             ZStack {

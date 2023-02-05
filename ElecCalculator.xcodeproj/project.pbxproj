@@ -22,6 +22,7 @@
 		93E3947F298F883100628D66 /* EquationTriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E3947E298F883100628D66 /* EquationTriangleView.swift */; };
 		93E39482298F8ECC00628D66 /* Updating in Frameworks */ = {isa = PBXBuildFile; productRef = 93E39481298F8ECC00628D66 /* Updating */; };
 		93E39484298F913000628D66 /* LabelledResistorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E39483298F913000628D66 /* LabelledResistorView.swift */; };
+		93E39486298FB25700628D66 /* ResistorShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E39485298FB25700628D66 /* ResistorShape.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		93E3947C298F830A00628D66 /* Equation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Equation.swift; sourceTree = "<group>"; };
 		93E3947E298F883100628D66 /* EquationTriangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquationTriangleView.swift; sourceTree = "<group>"; };
 		93E39483298F913000628D66 /* LabelledResistorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelledResistorView.swift; sourceTree = "<group>"; };
+		93E39485298FB25700628D66 /* ResistorShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResistorShape.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +135,7 @@
 				935B8C07298CF2AF00BC3402 /* ResistorView.swift */,
 				93E39483298F913000628D66 /* LabelledResistorView.swift */,
 				935B8C09298D46C400BC3402 /* EditableResistorView.swift */,
+				93E39485298FB25700628D66 /* ResistorShape.swift */,
 				93CDCA81298E85FC00539B81 /* ColorSnappingScrollView.swift */,
 				93E3947E298F883100628D66 /* EquationTriangleView.swift */,
 			);
@@ -222,6 +225,7 @@
 				93E39484298F913000628D66 /* LabelledResistorView.swift in Sources */,
 				935B8C0A298D46C400BC3402 /* EditableResistorView.swift in Sources */,
 				932F2225298C8BE70039D70A /* ContentView.swift in Sources */,
+				93E39486298FB25700628D66 /* ResistorShape.swift in Sources */,
 				935B8C06298CA75200BC3402 /* RelationCalculatorView.swift in Sources */,
 				93CDCA80298E847000539B81 /* Resistor.swift in Sources */,
 				93E3947D298F830A00628D66 /* Equation.swift in Sources */,
