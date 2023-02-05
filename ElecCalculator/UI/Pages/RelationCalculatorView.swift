@@ -20,30 +20,21 @@ struct RelationCalculatorView: View {
     var body: some View {
         List {
             Section("Formula") {
-                ZStack(alignment: .leading) {
-                    Text("Formula:")
+                HStack {
+                    Spacer()
+                    Spacer()
+                    EquationTriangleView(equation: formula.equation, selected: $unitTarget)
+                    Spacer()
                     Picker("", selection: $formula) {
                         ForEach(RelationFormula.allCases, id: \.hashValue) { form in
-                            Text(form.equation.semiBriefDescription)
+                            Text(form.equation.briefDescription)
                                 .tag(form)
                         }
                     }
+                    .pickerStyle(.wheel)
+                    .padding(.vertical, -40)
                 }
-                HStack {
-                    formulaElement(target: Equation.unitTarget(value: unitTarget, target: .value))
-                        .multilineTextAlignment(.center)
-                    Spacer()
-                    Text("=")
-                    Spacer()
-                    formulaElement(target: Equation.unitTarget(value: unitTarget, target: .var1))
-                        .multilineTextAlignment(.center)
-                    Spacer()
-                    Text(unitTarget == .value ? formula.equation.operation.rawValue :
-                            formula.equation.operation.other.rawValue)
-                    Spacer()
-                    formulaElement(target: Equation.unitTarget(value: unitTarget, target: .var2))
-                        .multilineTextAlignment(.center)
-                }
+                .offset(y: -15)
             }
 
             Section("Inputs") {
@@ -78,36 +69,6 @@ struct RelationCalculatorView: View {
                 }
             }
         }
-    }
-
-    func formulaElement(target: UnitTarget) -> some View {
-        Button {
-            withAnimation {
-                unitTarget = target
-            }
-        } label: {
-            ZStack {
-                switch target {
-                case .value:
-                    Text(formula.equation.value.unitPurpose)
-                case .var1:
-                    Text(formula.equation.var1.unitPurpose)
-                case .var2:
-                    Text(formula.equation.var2.unitPurpose)
-                }
-            }
-            .foregroundColor(.primary)
-            .padding(.horizontal, 6)
-            .padding(.vertical, 3)
-            .background {
-                if target == unitTarget {
-                    Color.green.opacity(0.5).cornerRadius(8)
-                } else {
-                    Color.gray.opacity(0.5).cornerRadius(8)
-                }
-            }
-        }
-        .buttonStyle(.plain)
     }
 
     func unitForActiveTarget(target: UnitTarget) -> EquationUnit {
