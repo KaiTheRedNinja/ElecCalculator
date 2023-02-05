@@ -78,6 +78,53 @@ struct Equation: Identifiable, Hashable, Equatable {
         "\(value.unitPurpose) = \(var1.unitPurpose) \(operation.rawValue) \(var2.unitPurpose)"
     }
 
+    func evaluate(for target: UnitTarget, given first: Double, and second: Double) -> Double {
+        let operation = target == .value ? self.operation : self.operation.other
+
+        switch operation {
+        case .times:
+            return first * second
+        case .div:
+            return (second == 0) ? 0 : first / second
+        }
+    }
+
+    subscript (target: UnitTarget) -> EquationUnit {
+        switch target {
+        case .value: return self.value
+        case .var1: return self.var1
+        case .var2: return self.var2
+        }
+    }
+
+    /// | val | value | var1 | var2 |
+    /// | ------ | ------- | ------ | ------ |
+    /// | value | value | var1 | var2 |
+    /// | var1 | var1 | value | var2 |
+    /// | var2 | var2 | value | var 1 |
+    ///
+    /// - Parameters:
+    ///   - value: The value that you're trying to solve for
+    ///   - target: The value to transform
+    /// - Returns: A transformed unit target
+    static func unitTarget(value: UnitTarget, target: UnitTarget) -> UnitTarget {
+        switch value {
+        case .value: return target
+        case .var1:
+            switch target {
+            case .value: return .var1
+            case .var1: return .value
+            case .var2: return .var2
+            }
+        case .var2:
+            switch target {
+            case .value: return .var2
+            case .var1: return .value
+            case .var2: return .var1
+            }
+        }
+    }
+
     enum Operation: String {
         case div = "/"
         case times = "*"

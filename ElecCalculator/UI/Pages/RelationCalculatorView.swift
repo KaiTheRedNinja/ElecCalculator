@@ -30,18 +30,18 @@ struct RelationCalculatorView: View {
                     }
                 }
                 HStack {
-                    formulaElement(target: unitTargetToActiveUserTarget(target: .value))
+                    formulaElement(target: Equation.unitTarget(value: unitTarget, target: .value))
                         .multilineTextAlignment(.center)
                     Spacer()
                     Text("=")
                     Spacer()
-                    formulaElement(target: unitTargetToActiveUserTarget(target: .var1))
+                    formulaElement(target: Equation.unitTarget(value: unitTarget, target: .var1))
                         .multilineTextAlignment(.center)
                     Spacer()
                     Text(unitTarget == .value ? formula.equation.operation.rawValue :
                             formula.equation.operation.other.rawValue)
                     Spacer()
-                    formulaElement(target: unitTargetToActiveUserTarget(target: .var2))
+                    formulaElement(target: Equation.unitTarget(value: unitTarget, target: .var2))
                         .multilineTextAlignment(.center)
                 }
             }
@@ -71,7 +71,9 @@ struct RelationCalculatorView: View {
                 HStack {
                     Text("\(unitForActiveTarget(target: .value).unitPurpose)")
                     Spacer()
-                    Text(result().twoDP)
+                    Text(formula.equation.evaluate(for: unitTarget,
+                                                   given: firstValue,
+                                                   and: secondValue).twoDP)
                     Text(unitForActiveTarget(target: .value).unitSymbol)
                 }
             }
@@ -108,52 +110,8 @@ struct RelationCalculatorView: View {
         .buttonStyle(.plain)
     }
 
-    func result() -> Double {
-        evaluate(var1: firstValue,
-                 var2: secondValue,
-                 operation: unitTarget == .value ? formula.equation.operation :
-                    formula.equation.operation.other)
-    }
-
-    func unitTargetToActiveUserTarget(target: UnitTarget) -> UnitTarget {
-        switch unitTarget {
-        case .value: return target
-        case .var1:
-            switch target {
-            case .var1: return .value
-            case .var2: return .var2
-            case .value: return .var1
-            }
-        case .var2:
-            switch target {
-            case .var1: return .value
-            case .var2: return .var1
-            case .value: return .var2
-            }
-        }
-    }
-
     func unitForActiveTarget(target: UnitTarget) -> EquationUnit {
-        return unitForTarget(target: unitTargetToActiveUserTarget(target: target))
-    }
-
-    func unitForTarget(target: UnitTarget) -> EquationUnit {
-        switch target {
-        case .value: return formula.equation.value
-        case .var1: return formula.equation.var1
-        case .var2: return formula.equation.var2
-        }
-    }
-
-    func evaluate(var1: Double,
-                  var2: Double,
-                  operation: Equation.Operation) -> Double {
-        switch operation {
-        case .times:
-            return var1 * var2
-        case .div:
-            return (var2 == 0) ? 0 : var1 / var2
-        }
+        return formula.equation[Equation.unitTarget(value: unitTarget, target: target)]
     }
 }
 
