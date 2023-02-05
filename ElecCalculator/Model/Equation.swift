@@ -43,17 +43,31 @@ struct EquationUnit: Identifiable, Hashable, Equatable {
                                        unitSymbol: "Ω",
                                        unitName: "Ohms",
                                        unitPurpose: "Resistence")
+    static let v2: EquationUnit = .init(equationSymbol: "V^2",
+                                        unitSymbol: "V",
+                                        unitName: "Volts",
+                                        unitPurpose: "Potential Difference")
 }
 
 struct Equation: Identifiable, Hashable, Equatable {
+    static func == (lhs: Equation, rhs: Equation) -> Bool {
+        lhs.description == rhs.description
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(description)
+    }
+
     init(value: EquationUnit,
          var1: EquationUnit,
          var2: EquationUnit,
-         operation: Operation = .times) {
+         operation: Operation = .times,
+         overrideEvaluation: ((UnitTarget, Double, Double) -> Double)? = nil) {
         self.value = value
         self.var1 = var1
         self.var2 = var2
         self.operation = operation
+        self.overrideEvaluation = overrideEvaluation
     }
 
     typealias RawValue = String
@@ -62,6 +76,7 @@ struct Equation: Identifiable, Hashable, Equatable {
     var var1: EquationUnit
     var var2: EquationUnit
     var operation: Operation = .times
+    var overrideEvaluation: ((UnitTarget, Double, Double) -> Double)?
 
     var id: String { description }
     var rawValue: String { description }
@@ -79,6 +94,10 @@ struct Equation: Identifiable, Hashable, Equatable {
     }
 
     func evaluate(for target: UnitTarget, given first: Double, and second: Double) -> Double {
+        if let overrideEvaluation {
+            return overrideEvaluation(target, first, second)
+        }
+
         let operation = target == .value ? self.operation : self.operation.other
 
         switch operation {
@@ -143,7 +162,7 @@ enum UnitTarget: CaseIterable {
 }
 
 enum RelationFormula: CaseIterable {
-    case vir, qit, wpt, wqv, pvi //, pv2r, pri2, rpla, g1r
+    case vir, qit, wpt, wqv, pvi, pv2r //, pv2r, pri2, rpla, g1r
 
     var equation: Equation { RelationFormula.equations[self]! }
 
@@ -152,7 +171,17 @@ enum RelationFormula: CaseIterable {
         .qit: .init(value: .q, var1: .i, var2: .t),
         .wpt: .init(value: .w, var1: .p, var2: .t),
         .wqv: .init(value: .w, var1: .q, var2: .v),
-        .pvi: .init(value: .p, var1: .v, var2: .i)
+        .pvi: .init(value: .p, var1: .v, var2: .i),
+        .pv2r: .init(value: .p, var1: .v2, var2: .r, operation: .div, overrideEvaluation: { target, var1, var2 in
+            switch target {
+            case .value:
+                return (var1*var1)/var2
+            case .var1:
+                return sqrt(var1*var2)
+            case .var2:
+                return (var1*var1)/var2
+            }
+        })
         //            .pv2r: .init(value: "P", var1: "V^2", var2: "R", operation: .div),
         //            .pri2: .init(value: "P", var1: "R", var2: "I^2"),
         //            .rpla: .init(value: "R", var1: "pL", var2: "A", operation: .div),
