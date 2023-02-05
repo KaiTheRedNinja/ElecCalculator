@@ -47,6 +47,10 @@ struct EquationUnit: Identifiable, Hashable, Equatable {
                                         unitSymbol: "V",
                                         unitName: "Volts",
                                         unitPurpose: "Potential Difference")
+    static let i2: EquationUnit = .init(equationSymbol: "I^2",
+                                        unitSymbol: "A",
+                                        unitName: "Ampere",
+                                        unitPurpose: "Current")
 }
 
 struct Equation: Identifiable, Hashable, Equatable {
@@ -162,7 +166,7 @@ enum UnitTarget: CaseIterable {
 }
 
 enum RelationFormula: CaseIterable {
-    case vir, qit, wpt, wqv, pvi, pv2r //, pv2r, pri2, rpla, g1r
+    case vir, qit, wpt, wqv, pvi, pv2r, pri2 // rpla, g1r
 
     var equation: Equation { RelationFormula.equations[self]! }
 
@@ -174,16 +178,22 @@ enum RelationFormula: CaseIterable {
         .pvi: .init(value: .p, var1: .v, var2: .i),
         .pv2r: .init(value: .p, var1: .v2, var2: .r, operation: .div, overrideEvaluation: { target, var1, var2 in
             switch target {
-            case .value:
+            case .value, .var2:
                 return (var1*var1)/var2
             case .var1:
                 return sqrt(var1*var2)
+            }
+        }),
+        .pri2: .init(value: .p, var1: .r, var2: .i2, overrideEvaluation: { target, var1, var2 in
+            switch target {
+            case .value:
+                return var1*var2*var2
+            case .var1:
+                return var1/(var2*var2)
             case .var2:
-                return (var1*var1)/var2
+                return sqrt(var1/var2)
             }
         })
-        //            .pv2r: .init(value: "P", var1: "V^2", var2: "R", operation: .div),
-        //            .pri2: .init(value: "P", var1: "R", var2: "I^2"),
         //            .rpla: .init(value: "R", var1: "pL", var2: "A", operation: .div),
         //            .g1r: .init(value: "G", var1: "1", var2: "R", operation: .div)
     ]
