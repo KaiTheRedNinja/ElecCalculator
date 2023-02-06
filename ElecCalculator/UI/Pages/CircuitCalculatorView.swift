@@ -134,9 +134,16 @@ struct CircuitCalculatorView: View {
                 }
                 ForEach(0..<resistences.count, id: \.self) { index in
                     HStack {
-                        Text("V\(index)")
-                        Spacer()
-                        Text((voltage * resistences[index] / totalResistence()).twoDP + " V")
+                        switch circuitType {
+                        case .parallel:
+                            Text("A\(index)")
+                            Spacer()
+                            Text((voltage/resistences[index]).twoDP + " A")
+                        case .series:
+                            Text("V\(index)")
+                            Spacer()
+                            Text((voltage * resistences[index] / totalResistence()).twoDP + " V")
+                        }
                     }
                 }
                 .foregroundColor(voltage == 0 ? .gray : .primary)

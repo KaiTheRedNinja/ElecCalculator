@@ -55,7 +55,7 @@ struct LabelledResistorView: View {
                         .padding(.trailing, 15)
                     Spacer()
                         .frame(width: 40)
-                    Text("\(Int(thisVoltage.rounded()))\nV")
+                    Text("\(Int((thisVoltage/resistance).rounded()))\nA")
                         .multilineTextAlignment(.leading)
                         .padding(.leading, -18)
                 }
