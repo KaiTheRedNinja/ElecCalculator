@@ -19,14 +19,47 @@ struct RelationCalculatorView: View {
 
     @State var numbers: [EquationUnit: Int] = [:]
 
+    // TODO: Persistence
+    @State var renderMethod: EquationRenderMethod = .triangle
+
+    enum EquationRenderMethod {
+        case triangle, equals
+    }
+
     var body: some View {
         List {
             Section {
                 HStack {
                     Spacer()
-                    EquationTriangleView(equation: formula, selected: $unitTarget)
-                        .frame(height: 170)
+                    switch renderMethod {
+                    case .triangle:
+                        EquationTriangleView(equation: formula, selected: $unitTarget)
+                            .frame(height: 170)
+                    case .equals:
+                        EquationEqualView(equation: formula, selected: $unitTarget)
+                            .frame(height: 170)
+                    }
                     Spacer()
+                }
+                .overlay(alignment: .bottomTrailing) {
+                    Button {
+                        withAnimation {
+                            switch renderMethod {
+                            case .triangle:
+                                renderMethod = .equals
+                            case .equals:
+                                renderMethod = .triangle
+                            }
+                        }
+                    } label: {
+                        switch renderMethod {
+                        case .triangle:
+                            Image(systemName: "equal.circle")
+                        case .equals:
+                            Image(systemName: "triangle.bottomhalf.filled")
+                        }
+                    }
+                    .buttonStyle(.plain)
                 }
             } header: {
                 HStack {
