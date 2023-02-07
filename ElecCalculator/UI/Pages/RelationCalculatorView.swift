@@ -6,39 +6,39 @@
 //
 
 import SwiftUI
+import Equation
 
 struct RelationCalculatorView: View {
-    @State var formula: RelationFormula = .vir
+    @State var formula: EquationGroup = .vir
     @State var firstValue: Double = 0
     @State var secondValue: Double = 0
 
-    @State var unitTarget: UnitTarget = .value
+    @State var unitTarget: SolveTarget = .top(0)
 
-    @Namespace
-    var namespace
+    @Namespace var namespace
+
+    @State var numbers: [EquationUnit: Int] = [:]
 
     var body: some View {
         List {
             Section {
                 HStack {
                     Spacer()
-                    EquationTriangleView(equation: formula.equation, selected: $unitTarget)
+                    EquationTriangleView(equation: formula, selected: $unitTarget)
+                        .frame(height: 170)
                     Spacer()
-                    Picker("", selection: $formula) {
-                        ForEach(RelationFormula.allCases, id: \.hashValue) { form in
-                            Text(form.equation.briefDescription)
-                                .tag(form)
-                        }
-                    }
-                    .pickerStyle(.wheel)
-                    .frame(width: 150)
-                    .padding(.vertical, -40)
                 }
-                .offset(y: -15)
             } header: {
                 HStack {
                     Text("Formula")
                     Spacer()
+                    Menu(formula.description) {
+                        ForEach(EquationGroup.allEquations, id: \.description) { equation in
+                            Button(equation.description) {
+                                formula = equation
+                            }
+                        }
+                    }
                     Button {
                         // TODO: show list of formulas
                     } label: {
@@ -47,42 +47,43 @@ struct RelationCalculatorView: View {
                 }
             }
 
-            Section("Inputs") {
-                HStack {
-                    Text(unitForActiveTarget(target: .var1).unitPurpose)
-                    Spacer()
-                    TextField(unitForActiveTarget(target: .var1).unitName,
-                              value: $firstValue,
-                              formatter: NumberFormatter())
-                    .multilineTextAlignment(.trailing)
-                    Text(unitForActiveTarget(target: .var1).unitSymbol)
-                }
-                HStack {
-                    Text(unitForActiveTarget(target: .var2).unitPurpose)
-                    Spacer()
-                    TextField(unitForActiveTarget(target: .var2).unitName,
-                              value: $secondValue,
-                              formatter: NumberFormatter())
-                    .multilineTextAlignment(.trailing)
-                    Text(unitForActiveTarget(target: .var2).unitSymbol)
+            Section {
+                ForEach(formula.flatUnits, id: \.1) { unit, role in
+                    if unitTarget != role {
+                        viewForUnit(unit: unit)
+                    }
                 }
             }
 
-            Section("Output") {
-                HStack {
-                    Text("\(unitForActiveTarget(target: .value).unitPurpose)")
-                    Spacer()
-                    Text(formula.equation.evaluate(for: unitTarget,
-                                                   given: firstValue,
-                                                   and: secondValue).twoDP)
-                    Text(unitForActiveTarget(target: .value).unitSymbol)
-                }
+            Section {
+                viewForUnit(unit: formula[unitTarget], computed: true)
             }
         }
     }
 
-    func unitForActiveTarget(target: UnitTarget) -> EquationUnit {
-        return formula.equation[Equation.unitTarget(value: unitTarget, target: target)]
+    func viewForUnit(unit: EquationUnit, computed: Bool = false) -> some View {
+        HStack {
+            Text(unit.unitPurpose)
+            if computed {
+                Spacer()
+                Text(String(format: "%.2f", result()))
+            } else {
+                TextField(unit.unitName, value: .init(get: {
+                    numbers[unit] ?? 0
+                }, set: { newValue in
+                    numbers[unit] = newValue
+                }), formatter: NumberFormatter())
+                .multilineTextAlignment(.trailing)
+            }
+            Text(unit.unitSymbol)
+        }
+        .matchedGeometryEffect(id: unit.id, in: namespace)
+    }
+
+    func result() -> Double {
+        let values = numbers.map({ ($0, Double($1)) })
+        return formula.solve(target: unitTarget,
+                             values: .init(uniqueKeysWithValues: values))
     }
 }
 
