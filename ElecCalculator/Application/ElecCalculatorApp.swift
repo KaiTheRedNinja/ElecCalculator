@@ -10,12 +10,16 @@ import SwiftUI
 @main
 struct ElecCalculatorApp: App {
     var body: some Scene {
+        #if os(iOS)
         WindowGroup {
-            #if os(iOS)
             ContentViewiOS()
-            #elseif os(macOS)
-            ContentViewmacOS()
-            #endif
         }
+
+        #elseif os(macOS)
+
+        WindowGroup {
+            ContentViewmacOS()
+        }
+        #endif
     }
 }
