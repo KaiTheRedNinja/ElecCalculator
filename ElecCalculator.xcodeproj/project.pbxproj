@@ -16,6 +16,10 @@
 		935B8C06298CA75200BC3402 /* RelationCalculatorViewiOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935B8C05298CA75200BC3402 /* RelationCalculatorViewiOS.swift */; };
 		935B8C08298CF2AF00BC3402 /* ResistorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935B8C07298CF2AF00BC3402 /* ResistorView.swift */; };
 		935B8C0A298D46C400BC3402 /* EditableResistorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935B8C09298D46C400BC3402 /* EditableResistorView.swift */; };
+		93CAA9CC2994AEAB009B0886 /* ContentViewmacOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CAA9CB2994AEAB009B0886 /* ContentViewmacOS.swift */; };
+		93CAA9CE2994AEE0009B0886 /* ResistorIdentificationViewmacOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CAA9CD2994AEE0009B0886 /* ResistorIdentificationViewmacOS.swift */; };
+		93CAA9D02994AF06009B0886 /* CircuitCalculatorViewmacOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CAA9CF2994AF06009B0886 /* CircuitCalculatorViewmacOS.swift */; };
+		93CAA9D22994AF2A009B0886 /* RelationCalculatorViewmacOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CAA9D12994AF2A009B0886 /* RelationCalculatorViewmacOS.swift */; };
 		93CDCA80298E847000539B81 /* Resistor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CDCA7F298E847000539B81 /* Resistor.swift */; };
 		93CDCA82298E85FC00539B81 /* ColorSnappingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CDCA81298E85FC00539B81 /* ColorSnappingScrollView.swift */; };
 		93CDCA84298E970800539B81 /* ResistorIdentificationViewiOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CDCA83298E970800539B81 /* ResistorIdentificationViewiOS.swift */; };
@@ -33,6 +37,10 @@
 		935B8C05298CA75200BC3402 /* RelationCalculatorViewiOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelationCalculatorViewiOS.swift; sourceTree = "<group>"; };
 		935B8C07298CF2AF00BC3402 /* ResistorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResistorView.swift; sourceTree = "<group>"; };
 		935B8C09298D46C400BC3402 /* EditableResistorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableResistorView.swift; sourceTree = "<group>"; };
+		93CAA9CB2994AEAB009B0886 /* ContentViewmacOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewmacOS.swift; sourceTree = "<group>"; };
+		93CAA9CD2994AEE0009B0886 /* ResistorIdentificationViewmacOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResistorIdentificationViewmacOS.swift; sourceTree = "<group>"; };
+		93CAA9CF2994AF06009B0886 /* CircuitCalculatorViewmacOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircuitCalculatorViewmacOS.swift; sourceTree = "<group>"; };
+		93CAA9D12994AF2A009B0886 /* RelationCalculatorViewmacOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelationCalculatorViewmacOS.swift; sourceTree = "<group>"; };
 		93CDCA7F298E847000539B81 /* Resistor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resistor.swift; sourceTree = "<group>"; };
 		93CDCA81298E85FC00539B81 /* ColorSnappingScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSnappingScrollView.swift; sourceTree = "<group>"; };
 		93CDCA83298E970800539B81 /* ResistorIdentificationViewiOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResistorIdentificationViewiOS.swift; sourceTree = "<group>"; };
@@ -101,6 +109,10 @@
 		93CAA9C829949E6B009B0886 /* macOS */ = {
 			isa = PBXGroup;
 			children = (
+				93CAA9CB2994AEAB009B0886 /* ContentViewmacOS.swift */,
+				93CAA9CD2994AEE0009B0886 /* ResistorIdentificationViewmacOS.swift */,
+				93CAA9CF2994AF06009B0886 /* CircuitCalculatorViewmacOS.swift */,
+				93CAA9D12994AF2A009B0886 /* RelationCalculatorViewmacOS.swift */,
 			);
 			path = macOS;
 			sourceTree = "<group>";
@@ -230,12 +242,16 @@
 			files = (
 				93CDCA84298E970800539B81 /* ResistorIdentificationViewiOS.swift in Sources */,
 				932F2231298C8BF80039D70A /* CircuitCalculatorViewiOS.swift in Sources */,
+				93CAA9CC2994AEAB009B0886 /* ContentViewmacOS.swift in Sources */,
 				93CDCA82298E85FC00539B81 /* ColorSnappingScrollView.swift in Sources */,
+				93CAA9D02994AF06009B0886 /* CircuitCalculatorViewmacOS.swift in Sources */,
 				93E39484298F913000628D66 /* LabelledResistorView.swift in Sources */,
 				935B8C0A298D46C400BC3402 /* EditableResistorView.swift in Sources */,
+				93CAA9D22994AF2A009B0886 /* RelationCalculatorViewmacOS.swift in Sources */,
 				932F2225298C8BE70039D70A /* ContentViewiOS.swift in Sources */,
 				93E39486298FB25700628D66 /* ResistorShape.swift in Sources */,
 				935B8C06298CA75200BC3402 /* RelationCalculatorViewiOS.swift in Sources */,
+				93CAA9CE2994AEE0009B0886 /* ResistorIdentificationViewmacOS.swift in Sources */,
 				93CDCA80298E847000539B81 /* Resistor.swift in Sources */,
 				935B8C08298CF2AF00BC3402 /* ResistorView.swift in Sources */,
 				932F2223298C8BE70039D70A /* ElecCalculatorApp.swift in Sources */,

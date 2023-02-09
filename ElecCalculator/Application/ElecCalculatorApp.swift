@@ -14,7 +14,7 @@ struct ElecCalculatorApp: App {
             #if os(iOS)
             ContentViewiOS()
             #elseif os(macOS)
-            Text("HI!")
+            ContentViewmacOS()
             #endif
         }
     }
