@@ -11,7 +11,11 @@ import SwiftUI
 struct ElecCalculatorApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            #if os(iOS)
+            ContentViewiOS()
+            #elseif os(macOS)
+            Text("HI!")
+            #endif
         }
     }
 }

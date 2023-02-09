@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  ContentViewiOS.swift
 //  ElecCalculator
 //
 //  Created by Kai Quan Tay on 3/2/23.
@@ -7,20 +7,21 @@
 
 import SwiftUI
 
-struct ContentView: View {
+#if os(iOS)
+struct ContentViewiOS: View {
     var body: some View {
         TabView {
-            ResistorIdentificationView()
+            ResistorIdentificationViewiOS()
                 .tabItem {
                     Label("Resistors Identifier", systemImage: "dumbbell.fill")
                 }
 
-            CircuitCalculatorView()
+            CircuitCalculatorViewiOS()
                 .tabItem {
                     Label("Circuit Calculator", systemImage: "arrow.triangle.branch")
                 }
 
-            RelationCalculatorView()
+            RelationCalculatorViewiOS()
                 .tabItem {
                     Label("Formulas", systemImage: "x.squareroot")
                 }
@@ -30,6 +31,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentViewiOS()
     }
 }
+#endif

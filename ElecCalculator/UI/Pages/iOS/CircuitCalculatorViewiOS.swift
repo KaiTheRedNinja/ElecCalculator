@@ -1,5 +1,5 @@
 //
-//  CircuitCalculatorView.swift
+//  CircuitCalculatorViewiOS.swift
 //  ElecCalculator
 //
 //  Created by Kai Quan Tay on 3/2/23.
@@ -8,7 +8,8 @@
 import SwiftUI
 import Equation
 
-struct CircuitCalculatorView: View {
+#if os(iOS)
+struct CircuitCalculatorViewiOS: View {
     // in ohms
     @State var resistences: [Double] = [10, 10]
 
@@ -175,15 +176,16 @@ struct CircuitCalculatorView: View {
     }
 }
 
+struct CircuitCalculatorView_Previews: PreviewProvider {
+    static var previews: some View {
+        CircuitCalculatorViewiOS()
+    }
+}
+#endif
+
 enum CircuitType: String, CaseIterable {
     case parallel = "Parallel"
     case series = "Series"
-}
-
-struct CircuitCalculatorView_Previews: PreviewProvider {
-    static var previews: some View {
-        CircuitCalculatorView()
-    }
 }
 
 extension Double {

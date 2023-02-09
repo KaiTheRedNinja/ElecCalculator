@@ -1,5 +1,5 @@
 //
-//  ResistorIdentificationView.swift
+//  ResistorIdentificationViewiOS.swift
 //  ElecCalculator
 //
 //  Created by Kai Quan Tay on 4/2/23.
@@ -8,7 +8,8 @@
 import SwiftUI
 import Equation
 
-struct ResistorIdentificationView: View {
+#if os(iOS)
+struct ResistorIdentificationViewiOS: View {
     @State var resistor: Resistor = .init(resistance: 220, tolerance: 5)
 
     // incremented whenever the resistor view needs updating
@@ -72,6 +73,7 @@ struct ResistorIdentificationView: View {
 
 struct ResistorIdentificationView_Previews: PreviewProvider {
     static var previews: some View {
-        ResistorIdentificationView()
+        ResistorIdentificationViewiOS()
     }
 }
+#endif

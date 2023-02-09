@@ -1,5 +1,5 @@
 //
-//  RelationCalculatorView.swift
+//  RelationCalculatorViewiOS.swift
 //  ElecCalculator
 //
 //  Created by Kai Quan Tay on 3/2/23.
@@ -8,7 +8,8 @@
 import SwiftUI
 import Equation
 
-struct RelationCalculatorView: View {
+#if os(iOS)
+struct RelationCalculatorViewiOS: View {
     @State var formula: EquationGroup = .vir
     @State var firstValue: Double = 0
     @State var secondValue: Double = 0
@@ -122,6 +123,7 @@ struct RelationCalculatorView: View {
 
 struct RelationCalculatorView_Previews: PreviewProvider {
     static var previews: some View {
-        RelationCalculatorView()
+        RelationCalculatorViewiOS()
     }
 }
+#endif
