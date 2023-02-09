@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Equation
 
 struct CircuitCalculatorView: View {
     // in ohms
@@ -84,7 +85,7 @@ struct CircuitCalculatorView: View {
                               formatter: NumberFormatter())
                     .multilineTextAlignment(.trailing)
                     .foregroundColor(voltage == 0 ? .gray : .primary)
-                    Text("V")
+                    UnitTextView("V", font: .system(.body, design: .serif))
                         .foregroundColor(voltage == 0 ? .gray : .primary)
                 }
 
@@ -95,7 +96,7 @@ struct CircuitCalculatorView: View {
                                   value: $resistences[index],
                                   formatter: NumberFormatter())
                         .multilineTextAlignment(.trailing)
-                        Text("Ω")
+                        UnitTextView("Ω", font: .system(.body, design: .serif))
                     }
                 }
                 .onDelete { indexSet in
@@ -116,7 +117,7 @@ struct CircuitCalculatorView: View {
                         tempResist = 0
                     }
                     .multilineTextAlignment(.trailing)
-                    Text("Ω")
+                    UnitTextView("Ω", font: .system(.body, design: .serif))
                 }
                 .foregroundColor(.gray)
             }
@@ -125,12 +126,14 @@ struct CircuitCalculatorView: View {
                 HStack {
                     Text("Effective Resistence:")
                     Spacer()
-                    Text(totalResistence().twoDP + " Ω")
+                    Text(totalResistence().twoDP)
+                    UnitTextView("Ω", font: .system(.body, design: .serif))
                 }
                 HStack {
                     Text("Current:")
                     Spacer()
-                    Text((voltage/totalResistence()).twoDP + " A")
+                    Text((voltage/totalResistence()).twoDP)
+                    UnitTextView("A", font: .system(.body, design: .serif))
                 }
                 ForEach(0..<resistences.count, id: \.self) { index in
                     HStack {
@@ -138,11 +141,13 @@ struct CircuitCalculatorView: View {
                         case .parallel:
                             Text("A\(index)")
                             Spacer()
-                            Text((voltage/resistences[index]).twoDP + " A")
+                            Text((voltage/resistences[index]).twoDP)
+                            UnitTextView("A", font: .system(.body, design: .serif))
                         case .series:
                             Text("V\(index)")
                             Spacer()
-                            Text((voltage * resistences[index] / totalResistence()).twoDP + " V")
+                            Text((voltage * resistences[index] / totalResistence()).twoDP)
+                            UnitTextView("V", font: .system(.body, design: .serif))
                         }
                     }
                 }

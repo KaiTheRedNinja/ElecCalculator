@@ -108,7 +108,7 @@ struct RelationCalculatorView: View {
                 }), formatter: NumberFormatter())
                 .multilineTextAlignment(.trailing)
             }
-            UnitTextView(unit.unitSymbol)
+            UnitTextView(unit.unitSymbol, font: .system(.body, design: .serif))
         }
         .matchedGeometryEffect(id: unit.id, in: namespace)
     }

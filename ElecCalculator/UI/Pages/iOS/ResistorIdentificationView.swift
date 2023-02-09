@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Equation
 
 struct ResistorIdentificationView: View {
     @State var resistor: Resistor = .init(resistance: 220, tolerance: 5)
@@ -19,7 +20,8 @@ struct ResistorIdentificationView: View {
                 HStack {
                     Text("Resistance:")
                     Spacer()
-                    Text("\(resistor.resistance) Ω")
+                    Text("\(resistor.resistance)")
+                    UnitTextView("Ω", font: .system(.body, design: .serif))
                 }
                 HStack {
                     Text("Tolerance")
@@ -29,12 +31,14 @@ struct ResistorIdentificationView: View {
                 HStack {
                     Text("Maximum Value:")
                     Spacer()
-                    Text("\(String(format: "%.2f", CGFloat(resistor.resistance) * CGFloat(100 + resistor.tolerance) / CGFloat(100))) Ω")
+                    Text("\(String(format: "%.2f", CGFloat(resistor.resistance) * CGFloat(100 + resistor.tolerance) / CGFloat(100)))")
+                    UnitTextView("Ω", font: .system(.body, design: .serif))
                 }
                 HStack {
                     Text("Minimum Value:")
                     Spacer()
-                    Text("\(String(format: "%.2f", CGFloat(resistor.resistance) * CGFloat(100 - resistor.tolerance) / CGFloat(100))) Ω")
+                    Text("\(String(format: "%.2f", CGFloat(resistor.resistance) * CGFloat(100 - resistor.tolerance) / CGFloat(100)))")
+                    UnitTextView("Ω", font: .system(.body, design: .serif))
                 }
             }
 
@@ -49,9 +53,10 @@ struct ResistorIdentificationView: View {
                                 .scaleEffect(.init(0.2))
                                 .frame(width: 60, height: 30)
                             Spacer()
-                            Text("\(resistance) Ω")
-                                .foregroundColor(.primary)
+                            Text("\(resistance)")
+                            UnitTextView("Ω", font: .system(.body, design: .serif))
                         }
+                        .foregroundColor(.primary)
                     }
                 }
             }
